@@ -1,15 +1,15 @@
 #![no_main]
 #![no_std]
 
-mod driver;
-mod runtime;
+mod internal;
 mod panic;
+mod runtime;
 
 #[unsafe(no_mangle)]
 pub fn kernel() -> ! {
-    driver::uart::init();
-    driver::uart::write_str("Hello");
-    
-    loop {
-    }
+    internal::uart::init();
+    internal::uart::write_str("Hello");
+    internal::display::init();
+
+    loop {}
 }

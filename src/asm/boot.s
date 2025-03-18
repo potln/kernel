@@ -3,6 +3,6 @@
 boot:
     bl stack_init
     bl bss_init
-    bl core_sort
+    bl core_init
     b kernel
 .global boot

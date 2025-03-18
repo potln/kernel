@@ -1,12 +1,12 @@
-use crate::driver;
+use crate::internal;
 
 #[panic_handler]
 fn panic(info: &core::panic::PanicInfo) -> ! {
-    driver::uart::init();
+    internal::uart::init();
     if let Some(message) = info.message().as_str() {
-        driver::uart::write_str(message);
+        internal::uart::write_str(message);
     } else {
-        driver::uart::write_str("Panic occurred, but no message is available.");
+        internal::uart::write_str("Panic occurred, but no message is available.");
     }
 
     loop {}

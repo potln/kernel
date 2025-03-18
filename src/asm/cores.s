@@ -21,12 +21,11 @@ core_jump:
     bx r0
 .global core_park
 
-core_sort:
+core_init:
     push {{lr}}
     bl core_read
     cmp r0, #0
-
     bne core_park
     pop {{lr}}
     bx lr
-.global core_sort
+.global core_init
