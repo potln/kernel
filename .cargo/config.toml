@@ -1,0 +1,12 @@
+[build]
+target = "armv7a-none-eabi"
+
+[target.armv7a-none-eabi]
+runner = "qemu-system-arm -display gtk -machine vexpress-a9 -serial mon:stdio -kernel"
+linker = "arm-none-eabi-gcc"
+rustflags = [
+    "-C", "link-arg=-nostartfiles",
+    "-C", "link-arg=-Tkernel.ld",
+    "-Zlocation-detail=none",
+    "-Zfmt-debug=none"
+]
