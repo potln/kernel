@@ -1,4 +1,5 @@
 {
     "rust-analyzer.cargo.target": "armv7a-none-eabi",
-    "rust-analyzer.cargo.allTargets": false
+    "rust-analyzer.cargo.allTargets": false,
+    "explorer.excludeGitIgnore": true
 }

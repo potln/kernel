@@ -1,5 +1,5 @@
-use crate::{write_reg, read_reg};
 use super::mem;
+use crate::{read_reg, write_reg};
 use mem::uart::*;
 
 pub fn init() {
@@ -23,5 +23,5 @@ pub fn write_bytes(bytes: &[u8]) {
 }
 
 pub fn write_str(str: &'static str) {
-    write_bytes(str.as_bytes());//
+    write_bytes(str.as_bytes());
 }
