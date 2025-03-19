@@ -2,14 +2,17 @@
 #![no_std]
 
 mod internal;
+use internal::*;
+
+mod interrupt;
 mod panic;
 mod runtime;
 
 #[unsafe(no_mangle)]
 pub fn kernel() -> ! {
-    internal::uart::init();
-    internal::uart::write_str("Hello");
-    internal::display::init();
+    lcd::init();
+    uart::init();
+    uart::write_str("Hello\n");
 
     loop {}
 }

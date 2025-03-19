@@ -1,4 +1,4 @@
 pub mod mem;
-pub mod uart;
 
-pub mod display;
+pub mod uart;
+pub mod lcd;
