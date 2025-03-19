@@ -54,6 +54,7 @@ pub fn control(
 pub fn init() {
     let timing0 = timing(160, 24, 136, 1023);
     let timing1 = timing(29, 3, 6, 767);
+
     let upbase = upbase();
     let control = control(
         true, 0b101, false, true, false, false, false, false, false, true, 0b01, false,

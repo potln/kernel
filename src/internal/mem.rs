@@ -4,6 +4,7 @@ pub mod lcd {
     unsafe extern "C" {
         pub static _framebuffer_start: *mut u32;
         pub static _framebuffer_end: *mut u32;
+
         pub static LCDTiming0: *mut u32;
         pub static LCDTiming1: *mut u32;
         pub static LCDTiming2: *mut u32;

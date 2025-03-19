@@ -29,9 +29,9 @@ SECTIONS {
         . += 1;
         _core_selection = .;
         . += 1;
-        _instruction_type = .;
+        _core_instruction_type = .;
         . += 1;
-        _result = .;
+        _core_result = .;
         . += 1;
         _core_jump_address = .;
         . += 4;
@@ -49,6 +49,10 @@ SECTIONS {
     . += (1024 * 768 * 4);
     _framebuffer_start = .;
 
+    _backbuffer_end = .;
+    . += (1024 * 768 * 4);
+    _backbuffer_start = .;
+
     _global_ram_start = .;
     _global_ram_end = 0x7FFFFFFF;
 
@@ -65,10 +69,10 @@ SECTIONS {
     .rodata : ALIGN(8) { *(.rodata*) } :code
 
     .bss (NOLOAD) : ALIGN(16) {
-        _bss_start = .;
+        _bss_end = .;
         *(.bss*);
         . = ALIGN(16);
-        _bss_end = .;
+        _bss_start = .;
     } :data
 
     .got : { *(.got*) }
