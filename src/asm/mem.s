@@ -5,8 +5,8 @@ stack_init:
 .global stack_init
 
 bss_init:
-    ldr r0, =_bss_start
-    ldr r1, =_bss_end
+    ldr r0, =_bss_end
+    ldr r1, =_bss_start
     mov r2, #0
 bss_clear:
     cmp r0, r1
@@ -19,11 +19,11 @@ bss_clear:
 framebuffer_init:
     ldr r0, =_framebuffer_end
     ldr r1, =_framebuffer_start
-    mov r2, #0xFFFFFFFF
+    mov r2, #0x000000
 framebuffer_fill:
     cmp r0, r1
     it lt
-    strlt r2, [r0], #4
+    strlt r2, [r0], #4 
     blt framebuffer_fill
     bx lr
 .global framebuffer_init

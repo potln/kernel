@@ -46,7 +46,7 @@ SECTIONS {
     .data : { *(.data*) } :data
 
     _framebuffer_end = .;
-    . += (1200 * 3 * 1200);
+    . += (1024 * 768 * 4);
     _framebuffer_start = .;
 
     _global_ram_start = .;

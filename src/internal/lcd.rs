@@ -6,7 +6,7 @@ pub fn timing(up: u32, m1: u32, m2: u32, low: u32) -> u32 {
     (up << 24) | (m1 << 16) | (m2 << 10) | low
 }
 
-pub fn upbase(framebuffer_addr: *mut u32) -> u32 {
+pub fn upbase() -> u32 {
     return core::ptr::addr_of!(_framebuffer_end) as u32;
 }
 
@@ -52,31 +52,15 @@ pub fn control(
 }
 
 pub fn init() {
-    unsafe {
-        let timing0 = timing(160, 24, 136, 1023);
-        let timing1 = timing(29, 3, 6, 767);
-        let upbase = upbase(_framebuffer_end);
-        let control = control(
-            true, 0b101, false, true, false, false, false, false, false, true, 0b01, false,
-        );
+    let timing0 = timing(160, 24, 136, 1023);
+    let timing1 = timing(29, 3, 6, 767);
+    let upbase = upbase();
+    let control = control(
+        true, 0b101, false, true, false, false, false, false, false, true, 0b01, false,
+    );
 
-        crate::internal::uart::write_str("LCDUpbase: ");
-        let mut upbase_str = [0u8; 8];
-
-        for i in 0..8 {
-            let nibble = (upbase >> (28 - i * 4)) & 0xF;
-            upbase_str[i] = if nibble < 10 {
-                b'0' + nibble as u8
-            } else {
-                b'A' + (nibble as u8 - 10)
-            };
-        }
-        crate::internal::uart::write_bytes(&upbase_str);
-        crate::internal::uart::write_str("\n");
-
-        write_reg!(LCDTiming0, timing0);
-        write_reg!(LCDTiming1, timing1);
-        write_reg!(LCDUPBASE, upbase);
-        write_reg!(LCDControl, control);
-    }
+    write_reg!(LCDTiming0, timing0);
+    write_reg!(LCDTiming1, timing1);
+    write_reg!(LCDUPBASE, upbase);
+    write_reg!(LCDControl, control);
 }

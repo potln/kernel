@@ -12,7 +12,7 @@ mod runtime;
 pub fn kernel() -> ! {
     lcd::init();
     uart::init();
-    uart::write_str("Hello\n");
+    uart::write_str("Hello world!\n");
 
     loop {}
 }
