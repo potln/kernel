@@ -2,7 +2,10 @@
 #![no_std]
 
 mod internal;
+use core::f64::consts::PI;
+
 use internal::*;
+use kernel::driver::{self, syscall};
 
 mod interrupt;
 mod panic;
@@ -13,7 +16,9 @@ pub fn kernel() -> ! {
     lcd::init();
     uart::init();
 
-    uart::write_str("Hello world!\n");
-
-    loop {}
+    loop {
+        timer::sync_ms(16);
+        timer::sync_wait();
+        frame::present();
+    }
 }

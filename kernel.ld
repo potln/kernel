@@ -4,6 +4,8 @@ _phys_binary_start = 0x80000;
 ENTRY(boot)
 
 PHDRS {
+    vector_table PT_LOAD FLAGS(5);
+
     core_management PT_LOAD FLAGS(6);
     boot_stack PT_LOAD FLAGS(6);
 
@@ -12,13 +14,14 @@ PHDRS {
 
     pl011 PT_LOAD FLAGS(6);
     pl111 PT_LOAD FLAGS(6);
+    pl031 PT_LOAD FLAGS(6);
 }
 
 SECTIONS {
     . = 0x00000000;
     .vector_table : {
         KEEP(*(.text.vector_table))
-    }
+    } :vector_table
 
     . = _phys_dram_start;
 
@@ -46,11 +49,14 @@ SECTIONS {
     .data : { *(.data*) } :data
 
     _framebuffer_end = .;
-    . += (1024 * 768 * 4);
+    . += (_framebuffer_width * _framebuffer_height * 4);
     _framebuffer_start = .;
 
+    _framebuffer_width = 1024;
+    _framebuffer_height = 768;
+
     _backbuffer_end = .;
-    . += (1024 * 768 * 4);
+    . += (_framebuffer_width * _framebuffer_height * 4);
     _backbuffer_start = .;
 
     _global_ram_start = .;
@@ -119,6 +125,24 @@ SECTIONS {
 
     . = 0x10011000;
     _dual_timer_start = .;
+
+    .pl031 : ALIGN(4) {
+        TIMER1Load = .; . += 0x4;
+        TIMER1Value = .; . += 0x4;
+        TIMER1Control = .; . += 0x4;
+        TIMER1IntClr = .; . += 0x4;
+        TIMER1RIS = .; . += 0x4;
+        TIMER1MIS = .; . += 0x4;
+        TIMER1BGLoad = .; . += 0x4;
+        TIMER2Load = .; . += 0x4;
+        TIMER2Value = .; . += 0x4;
+        TIMER2Control = .; . += 0x4;
+        TIMER2IntClr = .; . += 0x4;
+        TIMER2RIS = .; . += 0x4;
+        TIMER2MIS = .; . += 0x4;
+        TIMER2BGLoad = .; . += 0x4;
+    } :pl031
+
     . += 0x1fff;
     _dual_timer_end = .;
 

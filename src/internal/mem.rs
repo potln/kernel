@@ -2,8 +2,13 @@
 
 pub mod lcd {
     unsafe extern "C" {
+        pub static _framebuffer_width: u32;
+        pub static _framebuffer_height: u32;
+
         pub static _framebuffer_start: *mut u32;
         pub static _framebuffer_end: *mut u32;
+        pub static _backbuffer_start: *mut u32;
+        pub static _backbuffer_end: *mut u32;
 
         pub static LCDTiming0: *mut u32;
         pub static LCDTiming1: *mut u32;
@@ -28,6 +33,25 @@ pub mod uart {
     }
 }
 
+pub mod timer {
+    unsafe extern "C" {
+        pub static TIMER1Load: *mut u32;
+        pub static TIMER1Value: *mut u32;
+        pub static TIMER1Control: *mut u32;
+        pub static TIMER1IntClr: *mut u32;
+        pub static TIMER1RIS: *mut u32;
+        pub static TIMER1MIS: *mut u32;
+        pub static TIMER1BGLoad: *mut u32;
+        pub static TIMER2Load: *mut u32;
+        pub static TIMER2Value: *mut u32;
+        pub static TIMER2Control: *mut u32;
+        pub static TIMER2IntClr: *mut u32;
+        pub static TIMER2RIS: *mut u32;
+        pub static TIMER2MIS: *mut u32;
+        pub static TIMER2BGLoad: *mut u32;
+    }
+}
+
 #[macro_export]
 macro_rules! write_reg {
     ($e:expr, $value:expr) => {
@@ -39,6 +63,13 @@ macro_rules! write_reg {
 macro_rules! read_reg {
     ($e:expr, $t:ty) => {
         crate::internal::mem::pull(core::ptr::addr_of!($e) as *mut $t)
+    };
+}
+
+#[macro_export]
+macro_rules! link {
+    ($e:expr, $t:ty) => {
+        core::ptr::addr_of!($e) as $t
     };
 }
 

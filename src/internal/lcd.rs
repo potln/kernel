@@ -1,13 +1,9 @@
 use super::mem;
-use crate::write_reg;
+use crate::{link, write_reg};
 use mem::lcd::*;
 
 pub fn timing(up: u32, m1: u32, m2: u32, low: u32) -> u32 {
     (up << 24) | (m1 << 16) | (m2 << 10) | low
-}
-
-pub fn upbase() -> u32 {
-    return core::ptr::addr_of!(_framebuffer_end) as u32;
 }
 
 pub fn control(
@@ -52,16 +48,19 @@ pub fn control(
 }
 
 pub fn init() {
-    let timing0 = timing(160, 24, 136, 1023);
-    let timing1 = timing(29, 3, 6, 767);
-
-    let upbase = upbase();
-    let control = control(
-        true, 0b101, false, true, false, false, false, false, false, true, 0b01, false,
+    write_reg!(
+        LCDTiming0,
+        timing(160, 24, 136, link!(_framebuffer_width, u32) - 1)
     );
-
-    write_reg!(LCDTiming0, timing0);
-    write_reg!(LCDTiming1, timing1);
-    write_reg!(LCDUPBASE, upbase);
-    write_reg!(LCDControl, control);
+    write_reg!(
+        LCDTiming1,
+        timing(29, 3, 6, link!(_framebuffer_height, u32) - 1)
+    );
+    write_reg!(LCDUPBASE, link!(_framebuffer_end, u32));
+    write_reg!(
+        LCDControl,
+        control(
+            true, 0b101, false, true, false, false, false, false, false, true, 0b01, false,
+        )
+    );
 }

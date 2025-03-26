@@ -25,5 +25,14 @@ framebuffer_fill:
     it lt
     strlt r2, [r0], #4 
     blt framebuffer_fill
+    
+    ldr r0, =_backbuffer_end
+    ldr r1, =_backbuffer_start
+    mov r2, #0x000000
+backbuffer_fill:
+    cmp r0, r1
+    it lt
+    strlt r2, [r0], #4 
+    blt backbuffer_fill
     bx lr
 .global framebuffer_init
