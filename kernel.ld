@@ -12,6 +12,7 @@ PHDRS {
     code PT_LOAD FLAGS(5);
     data PT_LOAD FLAGS(6);
 
+    pl041 PT_LOAD FLAGS(6);
     pl011 PT_LOAD FLAGS(6);
     pl111 PT_LOAD FLAGS(6);
     pl031 PT_LOAD FLAGS(6);
@@ -86,9 +87,51 @@ SECTIONS {
     /DISCARD/ : { *(.comment*) }
 
     . = 0x10004000;
-    _pl041_start = .;
-    . += 0xfff;
-    _pl041_end = .;
+    _sound_start = .;
+    
+    .pl041 : ALIGN(4) {
+        AACIRXCR1 = .; . += 4;
+        AACITXCR1 = .; . += 4;
+        AACISR1 = .; . += 4;
+        AACIISR1 = .; . += 4;
+        AACIIE1 = .; . += 4;
+        AACIRXCR2 = .; . += 4;
+        AACITXCR2 = .; . += 4;
+        AACISR2 = .; . += 4;
+        AACIISR2 = .; . += 4;
+        AACIIE2 = .; . += 4;
+        AACIRXCR3 = .; . += 4;
+        AACITXCR3 = .; . += 4;
+        AACISR3 = .; . += 4;
+        AACIISR3 = .; . += 4;
+        AACIIE3 = .; . += 4;
+        AACIRXCR4 = .; . += 4;
+        AACITXCR4 = .; . += 4;
+        AACISR4 = .; . += 4;
+        AACIISR4 = .; . += 4;
+        AACIIE4 = .; . += 4;
+        AACISL1RX = .; . += 4;
+        AACISL1TX = .; . += 4;
+        AACISL2RX = .; . += 4;
+        AACISL2TX = .; . += 4;
+        AACISL12RX = .; . += 4;
+        AACISL12TX = .; . += 4;
+        AACISLFR = .; . += 4;
+        AACISLISTAT = .; . += 4;
+        AACISLIEN = .; . += 4;
+        AACINTCLR = .; . += 4;
+        AACIMAINCR = .; . += 4; 
+        AACIRESET = .; . += 4;
+        AACISYNC = .; . += 4;
+        AACIALLINTS = .; . += 4;
+        AACIMAINFR = .; . += 4;
+        AACIDR1 = .; . += 4;
+        AACIDR2 = .; . += 4;
+        AACIDR3 = .; . += 4;
+        AACIDR4 = .; . += 4;
+    } :pl041
+
+    _sound_end = .;
 
     . = 0x10005000;
     _sd_start = .;

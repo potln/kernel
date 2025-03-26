@@ -1,5 +1,4 @@
 use crate::internal::uart;
-use core::fmt::Write;
 
 unsafe extern "C" {
     fn boot();

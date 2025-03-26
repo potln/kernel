@@ -54,7 +54,6 @@ pub fn read_pixel(x: usize, y: usize) -> u32 {
 
 pub fn fill_rect(x: usize, y: usize, width: usize, height: usize, color: u32) {
     let framebuffer_width = self::width();
-    let framebuffer_height = self::height();
     let framebuffer_start = buffer();
 
     for dy in 0..height {
